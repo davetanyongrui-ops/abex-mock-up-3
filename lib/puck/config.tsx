@@ -166,13 +166,13 @@ export const config: Config<Props> = {
                 const heightClass = isInner ? 'min-h-[500px] md:min-h-[750px] py-32' : 'min-h-screen';
                 
                 return (
-                    <section className={className || `relative flex items-center overflow-hidden ${heightClass} ${fullImageMobile ? 'max-md:min-h-[auto] max-md:aspect-[3/2] max-md:py-20' : ''}`}>
-                        <div className={`absolute inset-0 z-0 ${bgFit === 'contain' ? 'bg-white' : 'bg-slate-900'} ${fullImageMobile ? 'max-md:bg-white' : ''}`}>
+                    <section className={className || `relative flex items-center overflow-hidden ${heightClass} ${fullImageMobile ? 'max-md:min-h-[500px] max-md:py-20' : ''}`}>
+                        <div className={`absolute inset-0 z-0 ${bgFit === 'contain' ? 'bg-white' : 'bg-slate-900'}`}>
                             {bgImage && (bgImage.startsWith('http') || bgImage.startsWith('/')) ? (
                                 <img
                                     src={bgImage}
                                     alt=""
-                                    className={`w-full h-full ${bgFit === 'contain' ? 'object-contain' : 'object-cover object-center'} ${fullImageMobile ? 'max-md:h-auto max-md:object-contain' : ''}`}
+                                    className={`w-full h-full ${bgFit === 'contain' ? 'object-contain' : 'object-cover object-center'} ${fullImageMobile ? 'max-md:object-contain' : ''}`}
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-white/10 text-xs">
