@@ -20,6 +20,7 @@ type Props = {
         bgFit?: "cover" | "contain";
         overlayOpacity?: number;
         fullImageMobile?: boolean;
+        mobileBgImage?: string;
     };
     FeatureGrid: {
         label?: string;
@@ -148,12 +149,17 @@ export const config: Config<Props> = {
                         { label: "Full View", value: true },
                         { label: "Original (Cropped)", value: false },
                     ],
+                },
+                mobileBgImage: {
+                    type: "text",
+                    label: "Mobile Background Image URL (Square/Portrait)",
                 }
             },
             defaultProps: {
                 title: "Reliable Water Pump Solutions for Every Industry",
                 subtitle: "Power. Precision. Performance. ABEX delivers trusted water pump systems built to move the world's most essential resource — water.",
                 bgImage: "https://images.unsplash.com/photo-1558444479-c84825d2ea9d?q=80&w=2000",
+                mobileBgImage: "",
                 ctaText: "Learn More",
                 ctaHref: "/about",
                 variant: "home",
@@ -161,18 +167,28 @@ export const config: Config<Props> = {
                 overlayOpacity: 60,
                 fullImageMobile: false,
             },
-            render: ({ title, subtitle, bgImage, brandLogo, ctaText, ctaHref, variant, className, titleColor, subtitleColor, textSize, fontFamily, bgFit, overlayOpacity, fullImageMobile, puck }) => {
+            render: ({ title, subtitle, bgImage, mobileBgImage, brandLogo, ctaText, ctaHref, variant, className, titleColor, subtitleColor, textSize, fontFamily, bgFit, overlayOpacity, fullImageMobile, puck }) => {
                 const isInner = variant === 'inner';
                 const heightClass = isInner ? 'min-h-[500px] md:min-h-[750px] py-32' : 'min-h-screen';
                 
                 return (
                     <section className={className || `relative flex items-center overflow-hidden ${heightClass} ${fullImageMobile ? 'max-md:min-h-[500px] max-md:py-20' : ''}`}>
                         <div className={`absolute inset-0 z-0 ${bgFit === 'contain' ? 'bg-white' : 'bg-slate-900'}`}>
+                            {/* Mobile Image */}
+                            {mobileBgImage && (mobileBgImage.startsWith('http') || mobileBgImage.startsWith('/')) ? (
+                                <img
+                                    src={mobileBgImage}
+                                    alt=""
+                                    className={`hidden max-md:block w-full h-full object-cover object-center`}
+                                />
+                            ) : null}
+                            
+                            {/* Desktop/Default Image */}
                             {bgImage && (bgImage.startsWith('http') || bgImage.startsWith('/')) ? (
                                 <img
                                     src={bgImage}
                                     alt=""
-                                    className={`w-full h-full ${bgFit === 'contain' ? 'object-contain' : 'object-cover object-center'} ${fullImageMobile ? 'max-md:object-contain' : ''}`}
+                                    className={`w-full h-full ${mobileBgImage ? 'max-md:hidden' : ''} ${bgFit === 'contain' ? 'object-contain' : 'object-cover object-center'} ${fullImageMobile ? 'max-md:object-contain' : ''}`}
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-white/10 text-xs">
